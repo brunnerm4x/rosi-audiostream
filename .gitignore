@@ -1,0 +1,7 @@
+db/
+manager/tmp/
+node_modules/
+player.localbuild/
+plugin/
+package-lock.json
+

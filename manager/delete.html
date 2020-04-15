@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Delete Stream</title>
+<meta charset="UTF-8">
+</head>
+<body>
+<h2>Delete Albums</h2>
+<br>
+<form action="albumdelete" method="post" id="deleteAlbumForm">
+	AlbumID for album to delete:<br>
+        <input type="text" name="albumID"><br>
+        <input type="submit" value="DELETE COMPLETE ALBUM"><br>
+    </form>
+
+<br>
+<button id="show_albums">Show Albums</button>
+<div id="albumlist">
+</div>
+
+
+
+<script src="/albums.js"></script>
+<script>
+	document.getElementById("show_albums").onclick = () => {
+		let alist = "";
+		albums.forEach((a) => { alist += a.albumID + " - " + a.album + " by " + a.artist + "\n" });
+		
+		document.getElementById("albumlist").innerText = alist;
+	};	
+</script>
+</body>
+</html>

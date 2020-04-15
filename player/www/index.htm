@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>AudioStreamer</title>
+	<link rel="stylesheet" href="/css/styles/main.css">
+	<link rel="stylesheet" href="/css/styles/browser.css">
+	<link rel="stylesheet" href="/css/styles/player.css">
+	<link rel="stylesheet" href="/css/styles/playList.css">
+</head>
+
+<body>
+	<div class="headline">
+		<img id="rosiIcon" src="/img/images/rosi_icon.svg" onclick="document.location = 'https://rosipay.net'"></img>
+		<span id="btnShowAlbums" class="headbtn">Albums</span>
+		<span id="btnShowTitles" class="headbtn">Titles</span>
+		<span id="btnSelectProvider" class="headbtn">Select Providers</span>
+	</div>
+	
+	<div id="selectProvidersMenu">
+		<span id="spmSaveInitProvider" class="spmMainBtn">Save Configuration</span>
+		<span id="spmAddProvider" class="spmMainBtn">Add Provider</span><br>
+		
+		<div id="spmMenuEntries">
+		</div>
+	</div>
+	
+	
+	<h1 id="browser_title">Loading Titles ... </h1>
+	<h2 id="browser_subtitle"></h1>
+
+	<div id="titleListHead" class="titleListReduced titleList titleRow">
+		<span id="tlhTrack" class="titleListHeaderElement tlElement tlTrack tlhButton">No.</span>
+		<span id="tlhTitle" class="titleListHeaderElement tlElement tlTitle tlhButton">Title</span>
+		<span id="tlhAlbum" class="titleListHeaderElement tlElement tlAlbum tlhButton">Album</span>
+		<span id="tlhArtist" class="titleListHeaderElement  tlElement tlArtist tlhButton">Artist</span>
+		<span id="tlhDuration" class="titleListHeaderElement tlElement tlDuration tlhButton">Duration</span>
+		<span id="tlhPrice" class="titleListHeaderElement tlElement tlPrice tlhButton">Price</span>
+	</div>
+	<div id="titleList" class="titleList titleListReduced">
+	</div>
+
+	<div id="player">
+		<div id="playerControls">
+			<span id="controlPrevious" class="mediumControl" class='previous'></span>
+			<span id="playPause" class='play'></span>
+			<span id="controlNext"  class="mediumControl" class='next'></span>
+			<input id="volumeSlider" class="sliderRedGray" type="range" min="0" max="1.5" value="0" tabindex="0" step="0.01"> 
+			<span id="currentVolumeText">100 %</span>
+		</div>
+		<img src="/img_lossy/images/cover_default.jpg" id="playerCover"></img>
+		<div id="timeSelector">
+			<span id="timeCode">00:00</span>
+			<input id="timeSlider" class="sliderRedGray" type="range" min="0" max="100" value="0" tabindex="0" step="0.01"> 
+			<span id="timeRemaining">00:00</span><br>
+			<div id="currentPlayingInfo"></div>
+		</div>
+	</div>
+	
+	<span id="playListButton" class='close playListButton'></span>
+	
+	<div id="playList" class="playListShown">
+		<div id="plHead">
+		<h1 id="headlinePlaylist">Playlist</h1>
+		<span id="btnRepeat" class="smallBtn repeatOff"></span>
+		
+		<span id="plKeepPlayed" class="swPlane">
+			<span id="swText" class="swDesignText">Keep Played Titles In List</span>
+			<span id="swKeepPlayed" class="swDesign swOuterOff">
+				<span id="swKeepPlayedSlider" class="swDesignSlider sliderSwOff"></span>
+			</span>
+		</span>
+		
+		</div>
+		<ul id="playlist_list">
+		</ul>
+		<!-- Spacer to be able to scroll to bottom  -->
+		<br> <br> <br> <br><br> <br> <br> <br>
+		<br> <br> <br> <br> <br> <br> <br> <br>
+	</div>
+	
+	<!-- Spacer to be able to scroll to bottom  -->
+	<div>
+		 <br> <br> 
+			<span id="bottominfo1" class="bottominfo"></span>
+			<span id="bottominfo2" class="bottominfo"></span>
+		 <br> <br> <br> <br> <br> <br>
+		 <br> <br> <br> <br> <br> <br> <br> <br>
+	</div>
+	
+	
+	<!-- custom events are triggered on this object to communicate with plugin -->
+	<div id="rosi_communication_to_plugin"></div>
+	<div id="rosi_communication_to_website"></div>
+
+	<script src="/js/scripts/iota_value_display_helper.js"></script>
+	<script src="/js/scripts/comm.js"></script>
+	<script src="/js/scripts/rosicomm.js"></script>
+	<script src="/js/scripts/stream.js"></script>
+	<script src="/js/scripts/player.js"></script>
+	
+	<script src="/js/scripts/ui-playlist.js"></script>
+	<script src="/js/scripts/ui-main.js"></script>
+
+</body>
+
+</html>

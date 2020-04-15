@@ -1,0 +1,11 @@
+Features für Player / Demo Seite
+
+* Suchfunktion (für jede Ansicht): Einfacher algorithmus schon im Server implementiert (muss reichen), graphische Umsetzung fehlt ...
+
+* Fehler anzeige für wichtige Fehler aus dem backend (noch gar nichts angefangen in die Richtung, nicht sehr wichtig)
+
+
+* Und wahrscheinlich noch 1000 andere Sachen .... ....
+
+
+

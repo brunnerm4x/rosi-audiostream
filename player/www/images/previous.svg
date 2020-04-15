@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 256 256"
+   version="1.1"
+   sodipodi:docname="previous.svg"
+   inkscape:version="0.92.1 r15371">
+  <metadata
+     id="metadata13">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>play</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1918"
+     inkscape:window-height="1004"
+     id="namedview11"
+     showgrid="false"
+     inkscape:zoom="1.84375"
+     inkscape:cx="148.24948"
+     inkscape:cy="189.14597"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1"
+     inkscape:measure-start="5.9661,148.61"
+     inkscape:measure-end="290.712,147.525" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#fff;}</style>
+  </defs>
+  <title
+     id="title6">play</title>
+  <path
+     class="cls-1"
+     d="m 138.51812,140.93583 90.33033,67.2083 a 6.84,6.84 0 0 0 10.97302,-5.53383 L 239.15876,67.331928 a 6.84,6.84 0 0 0 -11.02671,-5.426047 l -89.66752,68.090079 a 6.85,6.85 0 0 0 0.0536,10.93987 z"
+     id="path8"
+     style="fill:#000000"
+     inkscape:connector-curvature="0" />
+  <path
+     class="cls-1"
+     d="m 35.433648,141.44083 90.330332,67.20829 A 6.84,6.84 0 0 0 136.737,203.1153 L 136.0743,67.836925 A 6.84,6.84 0 0 0 125.04758,62.410877 L 35.380056,130.50096 a 6.85,6.85 0 0 0 0.05359,10.93987 z"
+     id="path8-3"
+     style="fill:#000000"
+     inkscape:connector-curvature="0" />
+  <rect
+     style="fill:#000000;fill-opacity:1;stroke-width:0.92993546"
+     id="rect49"
+     width="15.728813"
+     height="149.15254"
+     x="-33.063522"
+     y="-210.69687"
+     transform="rotate(179.71932)" />
+</svg>

@@ -1,0 +1,44 @@
+{
+  "name": "rosi-audiostream",
+  "version": "0.5.0",
+  "description": "ROSI Payment System Demo - Audio Streaming Service",
+  "main": "server_stream.js",
+  "dependencies": {
+    "formidable": "^1.2.1",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server_stream.js",
+    "start-streamserver": "node server_stream.js",
+    "start-webserver": "cd player && node server.js",
+    "manage-streamserver": "node server_manage.js",
+    "build-website": "bash scripts/build_website.sh",
+    "install": "bash scripts/setup.sh"
+  },
+  "config": {
+    "port": "10010",
+    "provider": "rosipoc01",
+    "payserver": "http://localhost:9000",
+    "suggestedCollateral": "200",
+    "stdcomment": "Music Provided For System Testing Purposes Only!",
+    "portms": "10011",
+    "msslicedur": "10",
+    "msformatending": ".flac",
+    "msformatffmpeg": "flac",
+    "msformatmime": "audio/flac",
+    "portws": "10012",
+    "wsmaxsubdirs": "2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunnerm4x/rosi-audiostream.git"
+  },
+  "author": "Maximilian Brunner",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/brunnerm4x/rosi-audiostream/issues"
+  },
+  "homepage": "https://rosipay.net"
+}

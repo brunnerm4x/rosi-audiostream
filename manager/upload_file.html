@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Add Stream</title>
+
+</head>
+<body>
+    <h1>Add Stream</h1>
+ 
+    <form action="fileupload" method="post" enctype="multipart/form-data" id="uploadform">
+        <input type="file" name="filetoupload">
+        <input type="submit" value="Upload"><br>
+        Price per slice (10sec) in iota (i):
+        <input type="text" name="price_per_slice" value="1"><br>
+        Add to AlbumID:
+        <input type="text" name="albumID"><br>
+		Overwrite / Add Tags ([tag] : [value]):<br>
+		<button id="btnAddtag">Add / Change Tag</button><br>
+		<div id="addtags"></div>
+	<!--	<input type="text" name="addtag_name_0"> : <input type="text" name="addtag_value_0"><br>  -->
+    </form>
+    <script>
+		let i = 0;
+		document.getElementById("btnAddtag").onclick = (e) => {
+			e.preventDefault();
+			document.getElementById("addtags").innerHTML += "<input type=\"text\" name=\"addtag_name_" + 
+							i + "\"> : <input type=\"text\" name=\"addtag_value_" + i + "\"><br>";
+			i ++;
+		};
+    </script>
+</body>
+</html

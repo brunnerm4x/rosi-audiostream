@@ -1,0 +1,274 @@
+.titleRow {
+	display:block;
+	position: relative;
+	left: 0;
+	margin:0;
+    font-family: Roboto-Regular;
+    font-size: 1em;
+    height: 2em;
+    line-height: 2em;
+    overflow: hidden;
+}
+
+.titleRowPlaying{
+	background-color: #888888 !important;
+}
+
+.titleRow:hover{
+	background-color: #BBBBBB;
+}
+
+.even {
+    background-color: #333333;
+}
+
+.odd {
+    background-color: #444444;
+}
+
+.rowIcon {
+    margin-top: 0.25em;
+    height: 1.5em;
+    width: 1.5em;
+    padding: 0;
+    border-radius: 0.75em;
+    background-color: #ff3b30;
+    cursor:pointer;
+}
+
+.left {
+    margin-left: 0.5vw;
+    float: left;
+}
+
+.right {
+    float: right;
+    margin-right: 0.5vw;
+}
+
+.rowText {
+    color: #ffffff;
+}
+
+.playListButton {
+    position: fixed;
+    bottom: 7vw;
+    right: 3vw;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 1.5vw;
+    padding: 0;
+    min-width: 0;
+    z-index: 2;
+    cursor:pointer;
+    background-color: #ff3b30;
+}
+
+.play {
+    background-image: url("/img/images/play.svg");
+}
+
+.stop {
+	background-color: #111111;
+    background-image: url("/img/images/stop.svg");
+}
+
+.pause {
+    background-image: url("/img/images/pause.svg") ;
+}
+
+.waiting {
+	background-size: 100% 100%;
+    background-image: url("/img/images/waiting.svg") ;
+}
+
+.addToList {
+    background-image: url("/img/images/add.svg") ;
+}
+
+.playListIcon {
+    background-image: url("/img/images/playList.svg") ;
+}
+
+.close {
+    background-image: url("/img/images/close.svg");
+}
+
+.titleList{
+	display:block;
+	position: relative;
+	left: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.titleListFull {
+    width: 99vw;
+    animation-name: titleListFull;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.5s;
+}
+
+.titleListReduced {
+    width: 60vw;
+    animation-name: titleListReduced;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.5s;
+}
+
+@keyframes titleListFull {
+    from {
+        width: 60vw;
+    }
+
+    to {
+        width: 99vw;
+    }
+}
+
+@keyframes titleListReduced {
+    from {
+        width: 99vw;
+    }
+
+    to {
+        width: 60vw;
+    }
+}
+
+.albumTile {
+	vertical-align: top;
+	display: inline-block;
+	position: relative;
+	width : 13em;
+	height: 15em;
+	padding: 2em;
+	cursor:pointer;
+}
+
+.albumTile:hover .albumTileCover {
+	  box-shadow: 0px 0px 25px #CCCCCC;
+}
+
+.albumTile:hover .albumTileText {
+	text-shadow: 0px 0px 30px #CCCCCC;
+}
+
+.albumTileCover{
+	display:block;
+	width : 100%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top : 0;
+	margin-bottom: 0.5em;
+	transition: box-shadow 0.7s;
+}
+
+
+.albumTileText{
+	color: #FFFFFF;
+	font-weight: bold;
+	text-align: center;
+	font-size: 1em;	
+	transition: text-shadow 0.7s;
+}
+
+.albumTileStart{
+	position: absolute;
+	top: 11.5em;
+	left: 3em; 
+	width: 2.5em;
+	height: 2.5em;
+	border-radius: 1.25em;
+	background-color: #ff3b30;
+}
+
+.albumTileStart:hover{
+	background-color: #207A01;
+}
+
+.albumTileAdd{
+	position: absolute;
+	top: 11.5em;
+	right: 3em; 
+	width: 2.5em;
+	height: 2.5em;
+	border-radius: 1.25em;
+	background-color: #ff3b30;
+}
+
+.albumTileAdd:hover{
+	background-color: #207A01;
+}
+
+
+#titleListHead{
+	margin-top: 2vw;
+	margin-bottom: 0px;
+	background-color: #444444;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+.tlElement{
+	overflow: hidden;
+}
+
+.tlTrack{
+	position: absolute;
+	left: 5%;
+	width: 4%;
+}
+
+.tlTitle{
+	position: absolute;
+	left: 9%;
+	width: 20%;
+}
+
+.tlAlbum{
+	position: absolute;
+	left: 30%;
+	width: 24%;
+}
+
+.tlArtist{
+	position: absolute;
+	left: 55%;
+	width: 19%;
+}
+
+.tlDuration{
+	position: absolute;
+	left: 75%;
+	width: 9%;
+}
+
+.tlPrice{
+	position: absolute;
+	left: 85%;
+	width: 10%;
+}
+
+
+.tlhButton{
+	cursor:pointer;
+}
+
+.tlhButton:hover{
+	text-decoration: underline;
+}
+
+.bottominfo{
+	color: #EFEFEF;
+	font-size: 0.7em;	
+}
+
+
+
+
+
+
+
+
+
