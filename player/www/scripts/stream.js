@@ -248,12 +248,12 @@ Streamer.prototype.init = function(startBuffering = false, manresolve = false, m
 			
 			
 			let initFinished = () => {
-									
+											
 				if(startBuffering)
 				{
 					this.manageBuffers().then(() => {
 						this.state = this.state < 1 ? STATE.STOP : this.state;
-						console.log("Init successs");
+						
 						resolve('Init Success.');
 						try{
 							this.oninitsuccess();
@@ -283,10 +283,10 @@ Streamer.prototype.init = function(startBuffering = false, manresolve = false, m
 				initFinished();
 				return;
 			}
-			
+
 			this.server.getSlice(this.id, startBuffering ? 0 : -1, 
 					this.payID.length > 0 ? this.payID[0] : '').then(r => 
-			{
+			{				
 				this.info = r.info;
 				this.rosi = r.rosi;
 				this.slice = r.slice;
@@ -472,15 +472,22 @@ Streamer.prototype.prepareSlice = function(dest, buffer, startTime, number)
 Streamer.prototype.manageBuffers = function(noInit = false, playRequest = false, 
 													manresolve = false, manreject = false)
 {
-	if(!noInit && this.manageBuffersInterval === false)	// Interval not initialized yet
+	if(noInit === false && this.manageBuffersInterval === false)	// Interval not initialized yet
+	{
+		console.warn("Setting manageBuffers Interval");
 		this.manageBuffersInterval = setInterval(() => { 
 				if(this.payID.length > 0)
+				{
 					this.manageBuffers().catch(e=>{});	// Ignore errors for periodic updates
+				}
 				else
+				{
 					console.log('Will not manage Buffers until payID is set.');
 					this.checkRequestPayment();
+				}
 			}, 
 			this.options.manageBuffersIntervalTime );
+	};
 
 	return new Promise((resolve, reject) => {
 		
@@ -493,7 +500,7 @@ Streamer.prototype.manageBuffers = function(noInit = false, playRequest = false,
 
 		if(this.requested > 0)
 		{
-			console.warn('Last manager did not finish yet. Requested:', this.requested);
+			console.log('Last manager did not finish yet. Requested:', this.requested);
 			if(typeof this.errorCounter.dnf == 'undefined')
 				this.errorCounter.dnf = 1;
 			else
@@ -575,7 +582,6 @@ Streamer.prototype.manageBuffers = function(noInit = false, playRequest = false,
 			}
 			else
 			{
-				console.warn("Requesting prepayment.");
 				this.checkRequestPayment(true);
 				this.onPaymentFinished.push(()=>{ 
 					this.manageBuffers(noInit, playRequest, resolve, reject); 
@@ -717,6 +723,10 @@ Streamer.prototype.stop = function(now = true)
 // Static helper function to calculate human readable time from seconds timestamp
 Streamer.posToPosHuman = function(time)
 {
+	// Don't allow negative time ...
+	if(time < 0)
+		time = 0;
+		
 	let pos_human = {h:0, m:0, s:0, ms:0, string: ""};
 	
 	pos_human.h = parseInt(time / 3600, 10);

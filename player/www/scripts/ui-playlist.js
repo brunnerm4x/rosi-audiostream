@@ -251,6 +251,10 @@ function upl_addItem(info, inx)
 		e.stopPropagation();
 		player.removeFromPlaylist(inx);
 	}
+	btnDelete.addEventListener("dblclick", (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+	});
 	
 	li.setAttributeNode(attr);
 	li.appendChild(title);

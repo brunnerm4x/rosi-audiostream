@@ -109,7 +109,9 @@ let Player = function()
 		keep_played_title: true, 	// Do not delete stream from playlist after it finished playing?
 		volume: 1.0,				// Volume of streams USE method .volume() to change!
 		overreg_ppm_factor: 1.5,	// Faktor to be multiplied with real ppm costs to prevent warning
-		repeat: 0					// 0 ... no repeat, 1 ... repeat all (playlist), 2 ...rep. song
+		repeat: 0,					// 0 ... no repeat, 1 ... repeat all (playlist), 2 ...rep. song
+		init_next_timeout_play: 12000,	// Timeout after starting stream to wait beofre calling init next
+		init_next_timeout_plchange: 1000	// Timeout after changing something in playlist stream to wait beofre calling init next
 	};
 	
 	this.processes = {
@@ -125,6 +127,9 @@ let Player = function()
 	
 	this.onPlaylistUpdate = function() {};		// Handler to be called when playlist changes
 	this.onStateChange = function() {};			// Handler to be called when state changes
+	
+	// Only one of the following timeouts should be active at a time -> cancel timeout Play BEFORE changing playlist
+	this.timeoutInitNext = false;		// Timeout handler for timeouts of init
 };
 
 Player.posToPosHuman = Streamer.posToPosHuman;	// Helper function for time display
@@ -136,10 +141,30 @@ Player.prototype.externalHandlerErrorManager = function(e)
 	return;
 }
 
+Player.prototype.cancelInitTimeouts = function()
+{
+	clearTimeout(this.timeoutInitNext);
+};
+
+Player.prototype.scheduleInitNext = function(timeout)
+{
+	return setTimeout(() => {
+		this.initNextStreams().then(r => {
+			this.prebufferStream().then(r=> {}).catch(e => {
+					console.error("(-2) Error Prebuffering Streams!");
+				});
+			}).catch(e => {
+				console.error("(-1) Error Initializing Streams:" + e);
+			});
+	}, timeout);
+};
+
 // Add new stream to Playlist
 Player.prototype.addToPlaylist = function(srv_stream, srv_pay, id_stream, start_init = true)
-{
+{	
 	return new Promise((resolve, reject) => {
+		
+		this.cancelInitTimeouts();
 		
 		let ssrv = new ServerComm(srv_stream);
 		
@@ -165,25 +190,13 @@ Player.prototype.addToPlaylist = function(srv_stream, srv_pay, id_stream, start_
 			
 			try { this.onPlaylistUpdate(); } catch(e) { this.externalHandlerErrorManager(e); };
 			
-			if(!start_init)
+			if(start_init)
 			{
-				// Added stream to playlist, finished for now
-				resolve(0);
-			}else{
 				// Start Initialization if streams according to settings
-				this.initNextStreams().then(r => {
-					this.prebufferStream().then(r=> {
-						// Finished
-						resolve(0);
-					}).catch(e => {
-						console.error("(-2) Error Prebuffering Streams!");
-						reject(-1);
-					});
-				}).catch(e => {
-					console.error("(-1) Error Initializing Streams:" + e);
-					reject(-1);
-				});
+				this.timeoutInitNext = this.scheduleInitNext(this.options.init_next_timeout_plchange);
 			}
+			// Added stream to playlist, finished for now
+			resolve(0);
 		}).catch(e => {
 			console.error("(-1) Error getting title Info:" + e);
 			reject(-1);
@@ -197,6 +210,8 @@ Player.prototype.addToPlaylist = function(srv_stream, srv_pay, id_stream, start_
 Player.prototype.removeFromPlaylist = function(inx, start_init = true)
 {
 	return new Promise((resolve, reject) => {
+		
+		this.cancelInitTimeouts();
 		
 		let remove = () => {
 			if(this.inx > inx)
@@ -228,18 +243,8 @@ Player.prototype.removeFromPlaylist = function(inx, start_init = true)
 			
 		if(start_init)
 		{
-			setTimeout(() => {	
-				// Start Initialization if streams according to settings
-				this.initNextStreams().then(r => {
-					this.prebufferStream().then(r=> {
-						// Finished
-					}).catch(e => {
-						console.error("(-2) Error Prebuffering Streams!");
-					});
-				}).catch(e => {
-					console.error("(-1) Error Initializing Streams:" + e);
-				});
-			}, 1000);
+			// Start Initialization if streams according to settings
+			this.timeoutInitNext = this.scheduleInitNext(this.options.init_next_timeout_plchange);
 		}
 	});
 }
@@ -247,6 +252,8 @@ Player.prototype.removeFromPlaylist = function(inx, start_init = true)
 // Takes item from position oldinx to position newinx
 Player.prototype.movePlaylistPosition = function(oldinx, newinx, start_init = true)
 {
+	this.cancelInitTimeouts();
+	
 	// check for valid indices
 	if( oldinx < 0 || oldinx >= this.playlist.length ||
 		newinx < 0 || newinx >= this.playlist.length )
@@ -268,18 +275,8 @@ Player.prototype.movePlaylistPosition = function(oldinx, newinx, start_init = tr
 	
 	if(start_init)
 	{
-		setTimeout(() => {	
-			// Start Initialization if streams according to settings
-			this.initNextStreams().then(r => {
-				this.prebufferStream().then(r=> {
-					// Finished
-				}).catch(e => {
-					console.error("(-2) Error Prebuffering Streams!");
-				});
-			}).catch(e => {
-				console.error("(-1) Error Initializing Streams:" + e);
-			});
-		}, 100);
+		// Start Initialization if streams according to settings
+		this.timeoutInitNext = this.scheduleInitNext(this.options.init_next_timeout_plchange);
 	}
 	
 	return 0;
@@ -431,7 +428,7 @@ Player.prototype.initNextStreams = function(manamount = false, manres = false, m
 		function initStream_2(activeChannels)
 		{
 			title.streamer = new Streamer(title.srv_stream, title.id_stream, activeChannels);
-
+			
 			title.streamer.init(false).then(() => {
 				
 				console.log("INIT Finished " + title.info.title + ".");
@@ -581,12 +578,16 @@ Player.prototype.prebufferStream = function(no = -1, manres = false, manrej = fa
 		
 		try
 		{
-			title.streamer.checkRequestPayment(true);		// call to make start smoother
+			// call to make start smoother
+			// If current title is to be initialized, only pay if necessary.
+			title.streamer.checkRequestPayment(((no == this.inx) ? false : true));
 		}
 		catch(e) 
 		{
-			console.error("Error occurred when requesting PREpayment, Error:" + e);
+			console.error("(-3) Error occurred when requesting PREpayment, Error:" + e);
 			this.processes.prebuffering = false;
+			reject(-3);
+			return;
 		}
 		// After payment, start to download buffers
 		title.streamer.init(true).then(r => {
@@ -641,6 +642,8 @@ Player.prototype.play =
 {
 	return new Promise((resolve, reject) => 
 	{		
+		this.cancelInitTimeouts();
+		
 		if(manres !== false && manrej !== false)
 		{
 			resolve(0);	
@@ -693,7 +696,7 @@ Player.prototype.play =
 			if(! this.processes.initializing)
 			{
 				console.log("Title initialization is not even startet yet -> starting init...");
-				this.initNextStreams().then(r => { 
+				this.initNextStreams(1).then(r => { 
 					console.log("Init before play success.");
 				}).catch(e => {
 					console.error("(-1) Error Initializing Streams:" + e);
@@ -783,20 +786,8 @@ Player.prototype.play =
 					this.playFinishExec();
 					
 					// Start prebuffering next title
-					setTimeout(() => {
-						this.prebufferStream().then(r => {
-							this.initNextStreams();
-						}).catch(e => {
-							if(e == -2)	// Not initialized
-							{
-								this.initNextStreams().then(r => {
-									this.prebufferStream();
-								}).catch(e => {
-									console.error("Error initializing Stream!");
-								});
-							}
-						});
-					}, 1000);
+					// Start Initialization if streams according to settings
+					this.timeoutInitNext = this.scheduleInitNext(this.options.init_next_timeout_play);
 					
 				}).catch(e => {
 					console.error("Error occurred starting stream: " + e);
@@ -817,22 +808,10 @@ Player.prototype.play =
 				return;
 			});
 		}
-		
-		// CHECK state of stream that is about to start
-		if(title.state == STATE.UINIT)
-		{
-			console.warn("Stream not initialized yet - initializing ... ");
-			this.initNextStreams(1).then(r => {
-				start();
-			}).catch(e => {
-				console.error("(-1) Error Initializing Streams:" + e);	
-				this.playRequested = false;			
-				reject(-1);
-				this.playFinishExec();
-			});
-		}
-		else
-			start();
+
+		// Start the Process...
+		start();
+	
 	});
 }
 
@@ -890,7 +869,6 @@ Player.prototype.stop = function()
 		};
 		
 		this.rosi.stopStream(title.streamId).then(stop_1).catch(e => {
-			console.log("rosistoansw");
 			if(e == 'Request Timeout')
 			{
 				console.warn("ROSI has not responded/Is not installed.");
