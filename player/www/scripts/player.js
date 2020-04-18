@@ -639,21 +639,21 @@ Player.prototype.playFinishExec = function()
 Player.prototype.play = 
 	function(time = 0, inx = -1, manres = false, manrej = false, isCurrentRequest = false)
 {
-	return new Promise((resolve, reject) => {
-		
+	return new Promise((resolve, reject) => 
+	{		
 		if(manres !== false && manrej !== false)
 		{
 			resolve(0);	
 			resolve = manres;
 			reject = manrej;
-		}
+		};
 		
 		if(this.playlist.length == 0)
 		{
 			console.warn("(-3) Cannot play an empty playlist.");
 			reject(-3);
 			return;
-		}
+		};
 		
 		if(this.playRequested && !isCurrentRequest)
 		{
@@ -661,7 +661,7 @@ Player.prototype.play =
 			console.log("Play already requested - scheduling current Request for later.");
 			this.onPlayExecuted.push(() => { this.play(time, inx, resolve, reject, false); });
 			return;
-		}
+		};
 		
 		this.playRequested = true;
 		
@@ -677,13 +677,13 @@ Player.prototype.play =
 			});
 			
 			return;
-		}
+		};
 		
 		if(inx != -1)
 		{
 			this.inx = inx;
 			try { this.onPlaylistUpdate(); } catch(e) { this.externalHandlerErrorManager(e); };
-		}
+		};
 		
 		if(this.playlist[this.inx].state == STATE.UINIT)
 		{
@@ -701,9 +701,9 @@ Player.prototype.play =
 					reject(-1);
 					this.playFinishExec();
 				});
-			}
+			};
 			return;
-		}
+		};
 			
 		// Clean up
 		if(this.inx >= 1 && !this.options.keep_played_title)
@@ -713,7 +713,7 @@ Player.prototype.play =
 			this.inx = 0;
 			this.playlist.splice(0, oldInx).forEach(t => { try { t.streamer.kill(); }catch(e){}});
 			try { this.onPlaylistUpdate(); } catch(e) { this.externalHandlerErrorManager(e); };  
-		}
+		};
 		
 		let title = this.playlist[this.inx];
 		
@@ -862,7 +862,7 @@ Player.prototype.addPlayInstant = function(srv_stream, srv_pay, id_stream, time)
 Player.prototype.stop = function()
 {
 	return new Promise((resolve, reject) => {
-		
+
 		if(this.playlist.length == 0 || this.state == STATE.UINIT || this.state == STATE.STOP)
 			resolve(0);
 		
@@ -890,6 +890,7 @@ Player.prototype.stop = function()
 		};
 		
 		this.rosi.stopStream(title.streamId).then(stop_1).catch(e => {
+			console.log("rosistoansw");
 			if(e == 'Request Timeout')
 			{
 				console.warn("ROSI has not responded/Is not installed.");

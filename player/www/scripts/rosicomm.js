@@ -73,10 +73,10 @@ RosiComm.prototype.getOpenPromise = function(reqId)
 		clearTimeout(promise[0].watchdog);
 	}
 	
-	return promise.length === 0 ? { 
-			resolve: function(d){ console.warn('Unknown promise requested!'); }, 
-			reject: function(d){ console.warn('Unknown promise requested!'); }
-		} : promise[0];
+	return ((promise.length == 0) ? ({ 
+			resolve: function(d){ console.warn('Unknown promise requested!' + reqId); }, 
+			reject: function(d){ console.warn('Unknown promise requested!' + reqId); }
+		}) : (promise[0]));
 }
 
 // data needs member reqId

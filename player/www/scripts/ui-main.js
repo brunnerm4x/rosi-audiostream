@@ -19,8 +19,8 @@ let providers = [
 		{
 			provider_human: "ROSI POC1 'Potato Server'", 
 			provider: "rosipoc01",
-			srv_stream: "http://potato.rosipay.net:10010", 
-			srv_pay: "http://potato.rosipay.net:9000",
+			srv_stream: "http://poc.rosipay.net:10010", 
+			srv_pay: "http://poc.rosipay.net:9000",
 			active: true,
 			srv_stream_comm: {}
 		}
@@ -311,7 +311,7 @@ let addProviderToMenu = function(provider)
 	entry.classList.add("spmEntry");
 	
 	let elements = [];
-	let texts = ["Name:", "ID:", "Stream - Server ID:", "ROSI - Server URL:", "Use This Provider:"];
+	let texts = ["Name:", "ID:", "Stream - Server URL:", "ROSI - Server URL:", "Use This Provider:"];
 	let values = [provider.provider_human, provider.provider, provider.srv_stream, provider.srv_pay];
 	for(let i = 0; i < 4; i++)
 	{
