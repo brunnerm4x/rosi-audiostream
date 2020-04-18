@@ -282,6 +282,8 @@ async function addAlbumToPlayer(provider, titles, play)
 {
 	let startInx = player.getPlaylist().length;
 	
+	await player.stop();
+	
 	for(let i = 0; i < titles.length; i++)
 	{
 		await player.addToPlaylist(provider.srv_stream, provider.srv_pay, titles[i].id, false);
