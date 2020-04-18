@@ -154,6 +154,14 @@
 	text-shadow: 0px 0px 30px #CCCCCC;
 }
 
+.albumTile:hover .albumTileStart {
+	opacity: 1;
+}
+
+.albumTile:hover .albumTileAdd {
+	opacity: 1;
+}
+
 .albumTileCover{
 	display:block;
 	width : 100%;
@@ -181,6 +189,8 @@
 	height: 2.5em;
 	border-radius: 1.25em;
 	background-color: #ff3b30;
+	opacity: 0;
+	transition: opacity 0.7s;
 }
 
 .albumTileStart:hover{
@@ -195,6 +205,8 @@
 	height: 2.5em;
 	border-radius: 1.25em;
 	background-color: #ff3b30;
+	opacity: 0;
+	transition: opacity 0.7s;
 }
 
 .albumTileAdd:hover{

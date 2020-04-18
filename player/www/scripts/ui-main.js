@@ -17,7 +17,7 @@
 
 let providers = [
 		{
-			provider_human: "ROSI POC1 'Potato Server'", 
+			provider_human: "ROSI PoC Demo Server", 
 			provider: "rosipoc01",
 			srv_stream: "http://poc.rosipay.net:10010", 
 			srv_pay: "http://poc.rosipay.net:9000",
